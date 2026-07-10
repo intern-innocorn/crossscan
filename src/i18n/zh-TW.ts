@@ -1,0 +1,53 @@
+// Traditional Chinese translations
+const zhTW = {
+  common: {
+    cancel: '取消',
+    delete: '刪除',
+    clear: '清除',
+    done: '完成',
+    back: '返回',
+    scanAgain: '再掃一次',
+    settings: '設定',
+    close: '關閉',
+  },
+  scan: {
+    title: '掃描 QR Code',
+    hint: '將相機對準 QR Code',
+    permissionTitle: '需要相機權限',
+    permissionDesc: 'CrossScan 需要相機權限才能掃描 QR Code。',
+    grantButton: '允許相機權限',
+    deniedTitle: '相機權限已拒絕',
+    deniedDesc: '請在裝置設定中開啟相機權限以使用 CrossScan。',
+    openSettings: '開啟設定',
+    torchOn: '手電筒：開',
+    torchOff: '手電筒：關',
+  },
+  result: {
+    title: '掃描結果',
+    copy: '複製',
+    copied: '已複製！',
+    openInBrowser: '在瀏覽器中開啟',
+    share: '分享',
+    typeUrl: '網址',
+    typeEmail: '電子郵件',
+    typePhone: '電話',
+    typeWifi: 'Wi-Fi',
+    typeText: '文字',
+    deleteConfirm: '刪除此記錄？',
+    emptyData: '偵測到空白 QR Code',
+  },
+  history: {
+    title: '歷史記錄',
+    clearAll: '清除全部',
+    clearConfirm: '清除所有掃描記錄？',
+    clearDesc: '此操作無法復原，所有記錄將被永久刪除。',
+    noRecords: '尚無掃描記錄',
+    noRecordsHint: '掃描一個 QR Code 開始使用',
+    today: '今天',
+    yesterday: '昨天',
+    thisWeek: '本週',
+    older: '更早',
+  },
+};
+
+export default zhTW;

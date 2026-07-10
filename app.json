@@ -1,0 +1,50 @@
+{
+  "expo": {
+    "name": "CrossScan",
+    "slug": "crossscan",
+    "version": "1.0.0",
+    "owner": "testing142s-team",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "crossscan",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.innocorn.crossscan",
+      "infoPlist": {
+        "NSCameraUsageDescription": "CrossScan needs camera access to scan QR codes and barcodes.",
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundColor": "#0F172A"
+      },
+      "package": "com.innocorn.crossscan",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow CrossScan to access your camera to scan QR codes.",
+          "barcodeScannerEnabled": true
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "d64c272f-fcfa-4485-a03a-925f2d183a64"
+      }
+    }
+  }
+}

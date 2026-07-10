@@ -1,0 +1,53 @@
+// English translations
+const en = {
+  common: {
+    cancel: 'Cancel',
+    delete: 'Delete',
+    clear: 'Clear',
+    done: 'Done',
+    back: 'Back',
+    scanAgain: 'Scan Again',
+    settings: 'Settings',
+    close: 'Close',
+  },
+  scan: {
+    title: 'Scan QR Code',
+    hint: 'Point camera at a QR code',
+    permissionTitle: 'Camera Access Needed',
+    permissionDesc: 'CrossScan needs camera access to scan QR codes.',
+    grantButton: 'Allow Camera Access',
+    deniedTitle: 'Camera Access Denied',
+    deniedDesc: 'Please enable camera access in your device settings to use CrossScan.',
+    openSettings: 'Open Settings',
+    torchOn: 'Torch On',
+    torchOff: 'Torch Off',
+  },
+  result: {
+    title: 'Scan Result',
+    copy: 'Copy',
+    copied: 'Copied!',
+    openInBrowser: 'Open in Browser',
+    share: 'Share',
+    typeUrl: 'URL',
+    typeEmail: 'Email',
+    typePhone: 'Phone',
+    typeWifi: 'Wi-Fi',
+    typeText: 'Text',
+    deleteConfirm: 'Delete this record?',
+    emptyData: 'Empty QR code detected',
+  },
+  history: {
+    title: 'History',
+    clearAll: 'Clear All',
+    clearConfirm: 'Clear all scan history?',
+    clearDesc: 'This cannot be undone. All records will be permanently deleted.',
+    noRecords: 'No scan records yet',
+    noRecordsHint: 'Scan a QR code to get started',
+    today: 'Today',
+    yesterday: 'Yesterday',
+    thisWeek: 'This Week',
+    older: 'Older',
+  },
+};
+
+export default en;
