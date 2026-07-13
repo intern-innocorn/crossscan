@@ -11,9 +11,11 @@ import { useHistory } from '@/hooks/useHistory';
 import Scanner from '@/components/scanner/Scanner';
 import ScannerOverlay from '@/components/scanner/ScannerOverlay';
 import PermissionGate from '@/components/scanner/PermissionGate';
+import AdBanner from '@/components/ads/BannerAd';
 import type { BarcodeScanningResult } from 'expo-camera';
 
 const { width, height } = Dimensions.get('window');
+const BANNER_HEIGHT = 50;
 
 export default function ScanScreen() {
   const { colors } = useTheme();
@@ -68,7 +70,12 @@ export default function ScanScreen() {
   return (
     <View style={styles.container}>
       <Scanner isActive={isScannerActive} onScan={handleScan} />
-      <ScannerOverlay />
+      <ScannerOverlay bottomOffset={BANNER_HEIGHT} />
+
+      {/* Ad banner at bottom, flush with tab bar */}
+      <View style={styles.adBanner}>
+        <AdBanner backgroundColor="#000000" />
+      </View>
 
       {/* Top bar */}
       <View
@@ -159,5 +166,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '500',
     flex: 1,
+  },
+  adBanner: {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 20,
   },
 });

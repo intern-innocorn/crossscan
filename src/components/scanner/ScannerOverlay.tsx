@@ -9,7 +9,11 @@ const CORNER_LENGTH = 24;
 const CORNER_THICKNESS = 3;
 const SCAN_LINE_HEIGHT = 2;
 
-export default function ScannerOverlay() {
+interface ScannerOverlayProps {
+  bottomOffset?: number;
+}
+
+export default function ScannerOverlay({ bottomOffset = 0 }: ScannerOverlayProps) {
   const { colors } = useTheme();
   const { t } = useI18n();
   const scanLineAnim = useRef(new Animated.Value(-VIEWFINDER_SIZE / 2)).current;
@@ -34,6 +38,7 @@ export default function ScannerOverlay() {
   }, [scanLineAnim]);
 
   const topHeight = (height - VIEWFINDER_SIZE) / 2;
+  const bottomHeight = Math.max(0, topHeight - bottomOffset);
 
   return (
     <>
@@ -107,14 +112,14 @@ export default function ScannerOverlay() {
           style={[styles.sideOverlay, { backgroundColor: colors.overlay }]}
         />
       </View>
-      {/* Bottom overlay */}
+      {/* Bottom overlay — reduced to make room for ad banner */}
       <View
         style={[
           styles.overlay,
           styles.bottomOverlay,
           {
             backgroundColor: colors.overlay,
-            height: topHeight,
+            height: bottomHeight,
           },
         ]}
       >

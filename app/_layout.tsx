@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { ActivityIndicator, View } from 'react-native';
+import mobileAds from 'react-native-google-mobile-ads';
 import { ThemeProvider, useTheme } from '@/theme/ThemeProvider';
 import { initLanguage } from '@/i18n';
 
@@ -38,7 +39,14 @@ export default function RootLayout() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    initLanguage().then(() => setReady(true));
+    async function bootstrap() {
+      await Promise.all([
+        initLanguage(),
+        mobileAds().initialize(),
+      ]);
+      setReady(true);
+    }
+    bootstrap();
   }, []);
 
   if (!ready) {

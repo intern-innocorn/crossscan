@@ -6,6 +6,7 @@ import { useI18n, getLanguage } from '@/i18n';
 import { useHistory } from '@/hooks/useHistory';
 import HistoryListItem from '@/components/history/HistoryListItem';
 import EmptyState from '@/components/history/EmptyState';
+import AdBanner from '@/components/ads/BannerAd';
 import type { ScanRecord } from '@/types';
 
 interface Section {
@@ -80,6 +81,9 @@ export default function HistoryScreen() {
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
+      {/* Ad banner below navigator header, above content */}
+      <AdBanner backgroundColor={colors.background} />
+
       {records.length > 0 && (
         <View style={styles.headerActions}>
           <TouchableOpacity onPress={handleClearAll} activeOpacity={0.6}>
