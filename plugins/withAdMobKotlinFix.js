@@ -7,25 +7,23 @@ const { withProjectBuildGradle } = require('expo/config-plugins');
  */
 function withAdMobKotlinFix(config) {
   return withProjectBuildGradle(config, (config) => {
+    if (config.modResults.contents.includes('googleMobileAdsKotlinFix')) {
+      return config;
+    }
+
     const strategy = `
-// Force play-services-ads version compatible with Kotlin 2.1.20 (SDK 57)
-subprojects {
-    afterEvaluate { project ->
-        project.configurations.all {
-            resolutionStrategy {
-                eachDependency { details ->
-                    if (details.requested.group == 'com.google.android.gms' && details.requested.name == 'play-services-ads') {
-                        details.useVersion '24.6.0'
-                    }
-                }
+// [googleMobileAdsKotlinFix] Force play-services-ads version compatible with Kotlin 2.1.20
+allprojects {
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.google.android.gms' && details.requested.name == 'play-services-ads') {
+                details.useVersion '24.6.0'
             }
         }
     }
 }
 `;
-    if (!config.modResults.contents.includes('play-services-ads')) {
-      config.modResults.contents += `\n${strategy}`;
-    }
+    config.modResults.contents += `\n${strategy}`;
     return config;
   });
 }
