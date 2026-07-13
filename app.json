@@ -166,7 +166,8 @@
           "iosAppId": "ca-app-pub-5658391580506757~6702989776"
         }
       ],
-      "expo-build-properties"
+      "expo-build-properties",
+      "./plugins/withAdMobKotlinFix"
     ],
     "experiments": {
       "typedRoutes": true
