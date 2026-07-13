@@ -1,29 +1,52 @@
 const { withProjectBuildGradle } = require('expo/config-plugins');
 
 /**
- * Forces play-services-ads to v24.6.0 which is compatible with Kotlin 2.1.20.
- * react-native-google-mobile-ads v16 pulls in play-services-ads 25.x
- * which requires Kotlin 2.3.0 that Expo SDK 57 does not support.
+ * Upgrades the Kotlin Gradle Plugin version from 2.1.20 to 2.3.0.
+ *
+ * expo-build-properties' kotlinVersion only upgrades the stdlib, not
+ * the compiler. The compiler version is set by the Expo version catalog
+ * (expoLibs). This plugin patches the root build.gradle to replace
+ * the Kotlin plugin alias with an explicit version declaration.
  */
 function withAdMobKotlinFix(config) {
   return withProjectBuildGradle(config, (config) => {
-    if (config.modResults.contents.includes('googleMobileAdsKotlinFix')) {
+    if (config.modResults.contents.includes('kotlinUpgrade-2.3.0')) {
       return config;
     }
 
-    const strategy = `
-// [googleMobileAdsKotlinFix] Force play-services-ads version compatible with Kotlin 2.1.20
-allprojects {
-    configurations.all {
-        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'com.google.android.gms' && details.requested.name == 'play-services-ads') {
-                details.useVersion '24.6.0'
-            }
-        }
-    }
-}
-`;
-    config.modResults.contents += `\n${strategy}`;
+    let contents = config.modResults.contents;
+
+    // 1. Replace Kotlin Android plugin alias with explicit v2.3.0
+    const kotlinPluginPattern = /alias\(.*?plugins\.kotlin(?:\.android)?\)\s+apply\s+false/g;
+    const kotlinReplacement = 'id "org.jetbrains.kotlin.android" version "2.3.0" apply false';
+    contents = contents.replace(kotlinPluginPattern, `${kotlinReplacement}  // kotlinUpgrade-2.3.0`);
+
+    // 2. Replace KSP plugin alias if present (KSP for Kotlin 2.3.0 = 2.3.7)
+    const kspPluginPattern = /alias\(.*?plugins\.ksp(?:\.android)?\)\s+apply\s+false/g;
+    const kspReplacement = 'id "com.google.devtools.ksp" version "2.3.7" apply false';
+    contents = contents.replace(kspPluginPattern, `${kspReplacement}  // kotlinUpgrade-2.3.0`);
+
+    // 3. Replace any inline Kotlin version references in the plugins block
+    //    e.g. kotlin("android") version "2.1.20" -> kotlin("android") version "2.3.0"
+    contents = contents.replace(
+      /(kotlin\("android"\)\s+version\s+)"[^"]+"/g,
+      '$1"2.3.0"'
+    );
+
+    // 4. Replace any remaining version catalog version references for Kotlin
+    //    e.g. kotlin = "2.1.20" in ext block
+    contents = contents.replace(
+      /(kotlin\s*=\s*)"[^"]*"/g,
+      `$1"2.3.0"  // kotlinUpgrade-2.3.0`
+    );
+
+    // 5. Replace ksp version in ext block
+    contents = contents.replace(
+      /(ksp\s*=\s*)"[^"]*"/g,
+      `$1"2.3.7"  // kotlinUpgrade-2.3.0`
+    );
+
+    config.modResults.contents = contents;
     return config;
   });
 }
