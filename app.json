@@ -166,14 +166,7 @@
           "iosAppId": "ca-app-pub-5658391580506757~6702989776"
         }
       ],
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "kotlinVersion": "2.3.0"
-          }
-        }
-      ]
+      "expo-build-properties"
     ],
     "experiments": {
       "typedRoutes": true
